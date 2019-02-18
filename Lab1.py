@@ -1,6 +1,11 @@
 import numpy as np
 
 def rank2TensorAdd(A, B, N):
+    assert np.shape(A)[0] == np.shape(A)[1], "A not square"
+    assert np.shape(B)[0] == np.shape(B)[1], "A not square"
+    assert np.shape(A) == np.shape(B), "Tensors not the same shape"
+    
+
     C = np.zeros((N,N))
     for i in range(N):
         for j in range(N):
@@ -25,61 +30,63 @@ def rank3TensorAdd(A, B, N):
        
     return C
 
-def rank3TensorMult(A, B, N):
-    C = np.zeros((N,N,N), dtype=int)
-    for i in range(N):
-        for j in range(N):
-            test = rank2TensorMult(A[:,i,:], B[:,:,j], N)
-            print(test)
+# def rank3TensorMult(A, B, N):
+#     C = np.zeros((N,N,N), dtype=int)
+#     for i in range(N):
+#         for j in range(N):
+#             test = rank2TensorMult(A[:,i,:], B[:,:,j], N)
+#             print(test)
 
-def rank3TensorMult2(A,B,N):
+def rank3TensorMult(A,B,N):
     C = np.zeros((N,N), dtype=int)
     for x in range(N):
-        print(rank2TensorMult(A[:,x,:], B[:,:,x], N))
         C = C + rank2TensorMult(A[:,x,:], B[:,:,x], N)   
 
     return C
 
 def main():
-    # Rank 2 Tensors
-    print("Rank 2")
-    N = int(input("Enter size: "))
+    # N input:
+    N = int(input("Enter tensor size: "))
 
+    # -------------------------
+    #      Rank 2 Tensors
+    # -------------------------
+    print("\nRank 2", "\n", "-"*30)
+
+    # Creating tensors A and B (N x N)
     a1 = np.random.uniform(low=0, high=20, size=(N,N)).astype(int)
-    print(a1, "\n")
-    print("-----------------------------------")
+    print("A: \n", a1, "\n")
 
     b1 = np.random.uniform(low=0, high=20, size=(N,N)).astype(int)
-    print(b1, "\n")
-    print("-----------------------------------")
+    print("B: \n", b1, "\n")
 
+    # 2D Tensor Addition
     c1_add = rank2TensorAdd(a1,b1,N)
-    print(c1_add, "\n")
-    print("-----------------------------------")
+    print("C (addition): \n", c1_add, "\n")
 
+    # 2D Tensor Multiplication
     c1_mult = rank2TensorMult(a1,b1,N)
-    print(c1_mult, "\n")
-    print("-----------------------------------")
+    print("C (multiplication): \n", c1_mult, "\n")
 
-    # Rank 3 Tensors
-    print("Rank 3")
-    print("-----------------------------------")
+    # ------------------------
+    #      Rank 3 Tensors
+    # ------------------------
+    print("\nRank 3", "\n", "-"*30)
     
+    # Creating tensors A and B (N x N)
     a2 = np.random.uniform(low=0, high=20, size=(N,N,N)).astype(int)
-    print(a2, "\n")
-    print("-----------------------------------")
+    print("A: \n", a2, "\n")
 
     b2 = np.random.uniform(low=0, high=20, size=(N,N,N)).astype(int)
-    print(b2, "\n")
-    print("-----------------------------------")
+    print("B: \n", b2, "\n")
 
-    # c2_add = rank3TensorAdd(a2,b2,N)
-    # print(c2_add, "\n")
-    # print("-----------------------------------")
+    # 3D Tensor Addition
+    c2_add = rank3TensorAdd(a2,b2,N)
+    print("C (addition): \n", c2_add, "\n")
 
-    print(rank3TensorMult2(a2,b2,N), "\n")
-    print(np.tensordot(a2,b2), "\n")
-    print(np.matmul(a2,b2))
+    # 3D Tensor Multiplication (Contraction)
+    c2_mult = rank3TensorMult(a2,b2,N)
+    print("C (contraction): \n", c2_mult, "\n")
 
 
 if __name__ == "__main__":
