@@ -490,4 +490,7 @@ tags
 # Ignore all local history of files
 .history
 
+#IntelliJ
+*.idea/*
+
 # End of https://www.gitignore.io/api/vim,osx,c++,julia,latex,python,jupyternotebook
