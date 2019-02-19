@@ -2,7 +2,7 @@ import numpy as np
 
 def rank2TensorAdd(A, B, N):
     assert np.shape(A)[0] == np.shape(A)[1], "A not square"
-    assert np.shape(B)[0] == np.shape(B)[1], "A not square"
+    assert np.shape(B)[0] == np.shape(B)[1], "B not square"
     assert np.shape(A) == np.shape(B), "Tensors not the same shape"
     
     C = np.zeros((N,N), dtype=int)
@@ -12,6 +12,10 @@ def rank2TensorAdd(A, B, N):
     return C
 
 def rank2TensorMult(A, B, N):
+    assert np.shape(A)[0] == np.shape(A)[1], "A not square"
+    assert np.shape(B)[0] == np.shape(B)[1], "B not square"
+    assert np.shape(A) == np.shape(B), "Tensors not the same shape"
+
     C = np.zeros((N,N), dtype=int)
     for i in range(N):
         for j in range(N):
@@ -20,6 +24,10 @@ def rank2TensorMult(A, B, N):
     return C
 
 def rank3TensorAdd(A, B, N):
+    assert (np.shape(A)[0] == np.shape(A)[1] and np.shape(A)[1] == np.shape(A)[2]), "A not cube"
+    assert (np.shape(B)[0] == np.shape(B)[1] and np.shape(B)[1] == np.shape(B)[2]), "B not cube"
+    assert np.shape(A) == np.shape(B), "Tensors not the same shape"
+
     C = np.zeros((N,N,N), dtype=int)
     for i in range(N):
         for j in range(N):
@@ -35,6 +43,10 @@ def rank3TensorAdd(A, B, N):
 #             print(test)
 
 def rank3TensorMult(A, B, N):
+    assert (np.shape(A)[0] == np.shape(A)[1] and np.shape(A)[1] == np.shape(A)[2]), "A not cube"
+    assert (np.shape(B)[0] == np.shape(B)[1] and np.shape(B)[1] == np.shape(B)[2]), "B not cube"
+    assert np.shape(A) == np.shape(B), "Tensors not the same shape"
+
     C = np.zeros((N,N), dtype=int)
     for x in range(N):
         C = C + rank2TensorMult(A[:,x,:], B[:,:,x], N)   
@@ -49,7 +61,7 @@ def main():
     # -------------------------
     print("\n", "-"*5, "Rank 2", "-"*5)
 
-    # Creating tensors A and B (N x N)
+    # Randomly generating tensors A and B (N x N)
     a1 = np.random.uniform(low=0, high=20, size=(N,N)).astype(int)
     print("\nA:")
     for x in a1:
@@ -77,7 +89,7 @@ def main():
     # ------------------------
     print("\n", "-"*5, "Rank 3", "-"*5)
     
-    # Creating tensors A and B (N x N)
+    # Randomly generating tensors A and B (N x N x N)
     a2 = np.random.uniform(low=0, high=20, size=(N,N,N)).astype(int)
     print("\nA:")
     for x in a2:
