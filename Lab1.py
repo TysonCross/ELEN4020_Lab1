@@ -1,3 +1,7 @@
+# Tyson Cross       1239448
+# Michael Nortje    1389486 
+# Josh Isserow      675720
+
 import numpy as np
 
 def checkRank2Valid(A,B):
