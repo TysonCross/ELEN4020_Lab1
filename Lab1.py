@@ -36,9 +36,8 @@ def rank2TensorMult(A, B, N):
     for i in range(N):
         for j in range(N):
             for k in range(N):
-                C[i][j] = C[i][j] + A[i][k] * B[k][j]
+                C[i][j] += A[i][k] * B[k][j]
     return C
-    
 
 def rank3TensorAdd(A, B, N):
     # Assumption is that both input tensors must be cubic, and of same rank
@@ -58,14 +57,40 @@ def rank3TensorMult(A, B, N):
     assert ((np.shape(B)[0] == np.shape(B)[1]) and (np.shape(B)[1] == np.shape(B)[2])), "B not a cube"
     assert np.shape(A) == np.shape(B), "Tensors not the same shape"
 
-    C = np.zeros((N,N), dtype=int)
+    C = np.zeros((N,N,N), dtype=int)
+
+    # for x in range(N):
+    #     C += rank2TensorMult(A[:,x,:], B[:,:,x], N)
+
+    # for x in range(N):
+    #     C += rank2TensorMult(A[x,:,:], B[:,x,:], N)
+
+    # for i in range(N):
+    #     for j in range(N):
+    #         for k in range(N):
+    #             for l in range(N):
+    #                 for d in range(N):
+    #                     C[i][j][k][l] += A[d][j][k] * B[i][d][l]
+    
+    # for x in range(N):
+    #     A_slice = np.zeros((N,N), dtype=int)
+    #     B_slice = np.zeros((N,N), dtype=int)
+    #     A_slice = A[x,:,:]
+    #     B_slice = B[:,x,:]
+    #     C[i][j][x] += rank2TensorMult(A_slice, B_slice, N)
+
     for x in range(N):
-        C = C + rank2TensorMult(A[:,x,:], B[:,:,x], N)   
+        C[:,:,x] = rank2TensorMult(A[x,:,:], B[:,x,:], N)
+        print("slice[",x,"]:\n",C[:,:,x],"\n", sep="")
+    
+    # assert(C.all() == C_check.all()), "Methods produce different Tensors"
+
     return C
 
 def main():
+    full_output_on = False
 
-    for N in [10,20]:
+    for N in [2,3]:
         print("-"*60)
         print("N =",N)
 
@@ -93,31 +118,33 @@ def main():
 
         # Output
         # Rank 2 Tensors
-        print("\n", "-"*5, "Rank 2", "-"*5)
+        # print("\n", "-"*5, "Rank 2", "-"*5)
         
-        print("\nA:")
-        print(a_2d)
+        # if full_output_on:
+        #     print("\nA:")
+        #     print(a_2d)
 
-        print("\nB:")
-        print(b_2d)
+        #     print("\nB:")
+        #     print(b_2d)
 
-        print("\nC: (element-wise addition)")
-        print(c_2d_add)
+        #     print("\nC: (element-wise addition)")
+        #     print(c_2d_add)
 
-        print("\nC: (matrix multiplication)")
-        print(c_2d_mult)
+        # print("\nC: (matrix multiplication)")
+        # print(c_2d_mult)
 
         # Rank 3 Tensors
         print("\n", "-"*5, "Rank 3", "-"*5)
 
-        print("\nA:")
-        print(a_3d)
+        if full_output_on:
+            print("\nA:")
+            print(a_3d)
 
-        print("\nB:")
-        print(b_3d)
+            print("\nB:")
+            print(b_3d)
 
-        print("\nC: (element-wise addition)")
-        print(c_3d_add)
+            print("\nC: (element-wise addition)")
+            print(c_3d_add)
 
         print("\nC: (tensor contraction)")
         print(c_3d_mult)
