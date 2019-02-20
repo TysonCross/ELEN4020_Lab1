@@ -1,0 +1,298 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[10 pt, conference]{cssconf}
+\IEEEoverridecommandlockouts
+\overrideIEEEmargins
+\setlength{\columnsep}{0.66cm}
+%-------------------------------------------------------------------------------------
+%	PACKAGES
+%-------------------------------------------------------------------------------------
+\usepackage[a4paper,%
+	left=1.4cm,right=1.4cm,top=1.2cm,bottom=1.4cm,%
+	%margin={1.8cm},
+	showframe=false]{geometry}
+\usepackage{graphicx}
+% \usepackage{color}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{subcaption}
+% \usepackage{capt-of}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\usepackage{tikz}
+\usepackage{multirow}
+\usepackage{multicol}
+% \usepackage{float}
+% \usepackage[section]{placeins}
+\usepackage{gensymb}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{listings}
+\usepackage[framed,autolinebreaks,useliterate]{matlab-prettifier}
+\usepackage[tracking=smallcaps,expansion=alltext,protrusion=true]{microtype}
+\usepackage[T1]{fontenc} % Required for accented characters
+% \usepackage{afterpage}
+% \usepackage[final]{pdfpages}
+% \usepackage[center]{titlesec}
+\usepackage{algorithm2e}
+\usepackage{lipsum}
+%-------------------------------------------------------------------------------------
+%	CUSTOM COMMANDS
+%-------------------------------------------------------------------------------------
+%\setlength\bibitemsep{0.5\baselineskip}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{light-blue}{rgb}{0.086,0.208,0.47}
+
+\SetTracking[spacing={25*,166,}]{encoding=*,shape=sc}{50}
+%\sisetup{detect-weight=true, detect-family=true}
+
+\renewcommand{\lstlistingname}{Code}
+% \let\ph\mlplaceholder % shorter macro
+% \lstMakeShortInline"
+\lstset{
+  style              = Matlab-editor,
+  basicstyle         = \mlttfamily,
+  escapechar         = ",
+  mlshowsectionrules = true,
+  xleftmargin=.25in,
+  xrightmargin=.25in,
+  rulecolor=\color{gray}
+}
+
+\newcommand{\comment}[1]
+\makeatletter
+\def\vhrulefill{\leavevmode\leaders\hrule height 0.7ex  depth \dimexpr0.4pt-0.66ex\hfill\kern0pt}
+\makeatother
+
+
+\newcommand{\inlinemaketitle}{{\let\newpage\relax\maketitle}}
+
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \begin{center}%
+    {\LARGE \@title \par}%
+    \vskip 1.0em%
+    {\small
+      \lineskip .2em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    \vskip 1.5em%   
+  \end{center}%
+  \par
+  \vskip 1em}
+    \thispagestyle{empty}%
+\makeatother
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+%--------------------------------------------
+% Fix numeration in subsection titles
+%-------------------------------------------
+\makeatletter
+\renewcommand{\@IEEEsectpunct}{\ \,}% Modified from {:\ \,}
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\alph{subsection}}
+\renewcommand\thesubsubsection{\thesubsection.{subsubsection}}
+\renewcommand\thesectiondis{\arabic{section}}
+\renewcommand\thesubsectiondis{\thesectiondis.\alph{subsection}}
+\renewcommand\thesubsubsectiondis{\thesubsectiondis.{subsubsection}}
+
+% \newcommand\dboxed[1]{\dbox{\ensuremath{#1}}}
+\DeclareCaptionFont{tiny}{\tiny}
+\makeatother
+%-------------------------------------------------------------------------------------
+%	TITLE AND LOGO
+%-------------------------------------------------------------------------------------
+% \title{%
+% \iffalse % For title
+% ELEN4020A Lab 1 Report
+% \fi %
+% 	\fontfamily{palatino}\selectfont{
+% 	\includegraphics[height=1in]{Wits_report_title_crest.pdf}  % Include the logo of your institution
+% 	\hspace{6.25in} % Position of the institution logo, increase to move left, decrease to move right
+% 	\vskip -1.2in ~\\ % Position of the text in relation to the institution logo, increase to move down, decrease to move up
+% 	\hspace{\fill}\parbox[l]{6.2in}{%
+%     \centering %
+%     \large {\sc School of Electrical Engineering, University of the Witswatersrand} \hspace{9pt} ~\\[13pt]
+%     %\textcolor{light-blue}
+%     {\Large ELEN4020A - Data Intensive Computing}\hfill % Course Title
+% 	\scriptsize \makebox[0ex][r]{Lecturer: Prof E. J. Otoo} \\[3.5pt]% Lecturer
+% 	\hspace{\fill}\parbox[c]{6.2in}{\vhrulefill } \\[4.5pt] % Horizontal rule
+% 	\normalsize \hspace{0.02in}Laboratory Exercise 1\hfill % Assignment title
+% 	\scriptsize \makebox[0ex][r]{25 February 2019 } ~\\[2pt] }\kern3pt \\% 
+% % 	{\centering\vspace{20pt}\large {\sc Business plan for minibus taxi commuting}}
+%     } \vspace{0.1in} %
+% }
+
+\title{%
+\iffalse % For title
+ELEN4020A Lab 1 Report
+\fi %
+	\fontfamily{palatino}\selectfont{
+	\includegraphics[height=1in]{Wits_report_title_crest.pdf}  % Include the logo of your institution
+	\hspace{6.25in} % Position of the logo, increase to move left, decrease to move right
+	\vskip -1.22in ~\\ % Position of the text in relation to the logo, increase to move down, decrease to move up
+	\hspace{\fill}\parbox[l]{6.2in}{%
+    \centering %
+    \parbox[l]{6.6in}{%
+    \fontsize{11}{10}\selectfont{\sc{School of Electrical Engineering, University of the Witwatersrand}} ~\\[2pt]}
+    \vspace{-4pt}
+    {\Large ELEN4020A - Data Intensive Computing}\hfill % Course Title
+	\scriptsize \makebox[0ex][r]{Lecturer: Prof E. J. Otoo} \\[3.5pt]% Lecturer
+	\hspace{\fill}\parbox[c]{6.2in}{\vhrulefill } \\[4.5pt] % Horizontal rule
+	\normalsize \hspace{0.02in}Laboratory Exercise 1\hfill % Assignment title
+	\scriptsize \makebox[0ex][r]{25 February 2019} ~\\[2pt] }\kern3pt \\% 
+    } \vspace{2pt} %
+}
+
+\author{%
+	\hspace{0.5in} %
+	\small\begin{tabular}[t]{c@{\extracolsep{1em}}c@{\extracolsep{1em}}c@{\extracolsep{1em}}c}
+	{Tyson Cross 1239448 }  { Michael Nortje 1389486 } { Josh Isserow 675720}\\ %
+	\end{tabular} ~\\[-5pt] %
+}
+
+%-------------------------------------------------------------------------------------
+%	DOCUMENT BEGIN
+%-------------------------------------------------------------------------------------
+\pagestyle{plain}
+\begin{document}
+\twocolumn[
+\begin{@twocolumnfalse}
+\maketitle\thispagestyle{plain}
+%-------------------------------------------------------------------------------------
+%	TITLE SECTION
+%-------------------------------------------------------------------------------------
+\maketitle\thispagestyle{plain}
+
+%-------------------------------------------------------------------------------------
+%	ABSTRACT
+%-------------------------------------------------------------------------------------
+\begin{center}\begin{minipage}{1\textwidth} \vspace{-0.3cm}
+\begin{abstract}
+Suspendisse vel felis. Ut lorem lorem, interdum eu, tinciduntsit amet, laoreet vitae, arcu. Aenean faucibus pede eu ante.Praesent enim elit, rutrum at, molestie non, nonummy vel, nisl.Ut lectus eros, malesuada sit amet, fermentum eu, sodalescursus, magna. Donec eu purus. Quisque vehicula, urna sedultricies auctor, pede lorem egestas dui, et convallis elit eratsed nulla. \vspace{2pt}
+\end{abstract}\end{minipage}\end{center}\vspace{0.2cm}
+\end{@twocolumnfalse}]
+%-------------------------------------------------------------------------------------
+%	MAIN REPORT CONTENTS
+%-------------------------------------------------------------------------------------
+\section*{Introduction}
+\lipsum[1]
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{section}{0}
+\section{rank2TensorAdd() }
+\lipsum[2]
+\begin{algorithm}
+    	 \SetAlgoLined
+     	\KwIn{tensor A (N x N), tensor B (N x N), N}
+    	\KwOut{tensor C (N x N)}
+	Initialize C to zero\;
+	\For{i = 1 to N}{
+		\For{j = 1 to N}{
+			$C_{ij}  \leftarrow A_{ij} + B_{ij}$\
+		}
+	}
+\end{algorithm}
+
+\subsection{Error checking}
+\lipsum[3]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{rank2TensorMult() }
+\lipsum[4]
+\begin{algorithm}
+    	 \SetAlgoLined
+     	\KwIn{tensor A (N x N), tensor B (N x N), N}
+    	\KwOut{tensor C (N x N)}
+	Initialize C to zero\;
+	\For{i = 1 to N}{
+		\For{j = 1 to N}{
+			\For{k = 1 to N}{
+				$C_{ij}  \leftarrow C_{ij} + A_{ij} * B_{ij}$\
+			}		
+		}
+	}
+\end{algorithm}
+
+\subsection{Error checking}
+\lipsum[5]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtolength{\textheight}{-11.0cm} 
+% This command serves to balance the column lengths
+% on the last page of the document manually. It shortens
+% the textheight of the last page by a suitable amount.
+% This command does not take effect until the next page
+% so it should come on the page before the last. Make
+% sure that you do not shorten the textheight too much.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{rank3TensorAdd() }
+\lipsum[6]
+\begin{algorithm}
+    	 \SetAlgoLined
+     	\KwIn{tensor A (N x N x N), tensor B (N x N x N), N}
+    	\KwOut{tensor C (N x N x N)}
+	Initialize C to zero\;
+	\For{i = 1 to N}{
+		\For{j = 1 to N}{
+			\For{k = 1 to N}{
+				$C_{ijk}  \leftarrow A_{ijk} + B_{ijk}$\
+			}
+		}
+	}
+\end{algorithm}
+
+\subsection{Error checking}
+\lipsum[7]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{rank3TensorMult() }
+\lipsum[8]
+\begin{algorithm}
+    	 \SetAlgoLined
+     	\KwIn{tensor A (N x N x N), tensor B (N x N x N), N}
+    	\KwOut{tensor C (N x N x N)}
+	Initialize C to zero\;
+	\For{x = 1 to N}{
+        $C_{ijx}  \leftarrow C_{ijx} + \big[A_{ik}B_{kj}\big]_{x}$\
+	}
+\end{algorithm}
+
+\subsection{Error checking}
+\lipsum[9]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
+\lipsum[10]
+
+% -------------------------------------------------------------------------------------
+% 	BIBLIOGRAPHY
+% ------------------------------------------------------------------------------------
+\clearpage
+\newpage
+\onecolumn
+\bibliographystyle{IEEEtran}
+{\bibliography{IEEEabrv,ELEN4020A_Lab1_Report.bib}}
+
+%-------------------------------------------------------------------------------------
+%	APPENDICES
+%-------------------------------------------------------------------------------------
+\newgeometry{a4paper,left=1.3cm,right=1.3cm,top=1.3cm,bottom=1.5cm}
+\onecolumn
+\renewcommand{\thefigure}{A\arabic{figure}}
+\setcounter{figure}{0}
+\begin{appendices}
+\section{} 
+\rule{0.975\textwidth}{.4pt}
+\vspace{40pt}
+\end{appendices}
+
+\end{document}
