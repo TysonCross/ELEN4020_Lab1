@@ -1,0 +1,70 @@
+%-------------------------------------------------------------------------------------
+%	CUSTOM COMMANDS
+%-------------------------------------------------------------------------------------
+%\setlength\bibitemsep{0.5\baselineskip}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{light-blue}{rgb}{0.086,0.208,0.47}
+
+\SetTracking[spacing={25*,166,}]{encoding=*,shape=sc}{50}
+%\sisetup{detect-weight=true, detect-family=true}
+
+\renewcommand{\lstlistingname}{Code}
+% \let\ph\mlplaceholder % shorter macro
+% \lstMakeShortInline"
+
+\lstset{
+%   language        =   Python,
+%   frame             =   lines,
+  basicstyle        =   \footnotesize,
+  showstringspaces  =   false,
+%   escapechar      =   ",
+%   xleftmargin     =   .25in,
+%   xrightmargin    =   .25in,
+%   rulecolor       =   \color{gray}
+}
+
+\newcommand{\comment}[1]
+\makeatletter
+\def\vhrulefill{\leavevmode\leaders\hrule height 0.7ex  depth \dimexpr0.4pt-0.66ex\hfill\kern0pt}
+\makeatother
+
+\newcommand{\inlinemaketitle}{{\let\newpage\relax\maketitle}}
+
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \begin{center}%
+    {\LARGE \@title \par}%
+    \vskip 1.0em%
+    {\small
+      \lineskip .2em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    \vskip 1.5em%   
+  \end{center}%
+  \par
+  \vskip 1em}
+    \thispagestyle{empty}%
+\makeatother
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+%--------------------------------------------
+% Fix numeration in subsection titles
+%-------------------------------------------
+\makeatletter
+\renewcommand{\@IEEEsectpunct}{\ \,}% Modified from {:\ \,}
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\alph{subsection}}
+\renewcommand\thesubsubsection{\thesubsection.{subsubsection}}
+\renewcommand\thesectiondis{\arabic{section}}
+\renewcommand\thesubsectiondis{\thesectiondis.\alph{subsection}}
+\renewcommand\thesubsubsectiondis{\thesubsectiondis.{subsubsection}}
+
+% \newcommand\dboxed[1]{\dbox{\ensuremath{#1}}}
+\DeclareCaptionFont{tiny}{\tiny}
+\makeatother
