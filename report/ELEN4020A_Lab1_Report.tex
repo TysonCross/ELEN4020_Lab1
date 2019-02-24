@@ -29,42 +29,31 @@
 %-------------------------------------------------------------------------------------
 %	ABSTRACT
 %-------------------------------------------------------------------------------------
-\begin{center}\begin{minipage}{1\textwidth} \vspace{-0.3cm}
+\begin{center}\begin{minipage}{0.95\textwidth} \vspace{-0.3cm}
 \begin{abstract}
-Abstract goes here \vspace{2pt}
+The operations of addition and multiplication with square and cubic array inputs (rank 2 and rank 3 tensors with equal dimensions and element lengths) are programmed using Python and Numpy array objects in this laboratory exercise. Error checking is implemented using simple assertion statements. The methods and motivations are discussed, and the generalised operation of tensor contraction for higher dimensions is examined with reference to the laboratory objectives.\vspace{2pt}
 \end{abstract}\end{minipage}\end{center}\vspace{0.2cm}
 \end{@twocolumnfalse}]
 %-------------------------------------------------------------------------------------
 %	MAIN REPORT CONTENTS
 %-------------------------------------------------------------------------------------
 \section*{Introduction}
-\begin{itemize}
-    \item Introduction to Tensors as generalised higher dimensional vectors/matrices/arrays.
-    \item Use of Python. 
-    \item Use of Numpy, and numpy arrays
-    \item Access methods used (shape in particular)
-    \item For loop and non-parallelism of the code.
-    \item Motivation and laboratory exercises objectives.
-    \item Python argument passing mechanism
-    \item Assumptions
-    \item Definitions
-    
-    Citations to include: \cite{hackbusch2012tensor} \cite{Hunt-notes} \cite{sochi2016introduction} \cite{sringeri2015tensor}
-\end{itemize}
+Tensors are a generalisation of dimensional arrays or vectors, with the rank of a tensor being a measure of their dimension. Tensors are an useful mathematical construct widely used in engineering and scientific applications, including machine learning applications with large data sets. For this laboratory, Python 3.6 was used for programming the functions, motivated by the language's syntactic elegance and excellent readability of its high-level language. The Numpy library provides robust, performant support for manipulating \textit{n}-dimensional data arrays. The Numpy library is a widely used scientific computing library providing a mutable array data structure used for rank 2 and rank 3 tensor representations in the laboratory exercises. Numpy array-specific functions such as \verb|ndarray.shape| were used to return, check and compare the array dimensions and length. The laboratory results do not use any parallel code, and rely on sequential for-loops for computation. The implemented code is shown in Appendix I, Code 1.%All input tensor element values are assumed to integers, and the inputs tensors are either square or cubic matrices, where the lengths of dimension have the same number of elements.  
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{section}{0}
 \section{Rank 2 Tensor addition}
-The function \verb|rank2TensorAdd()| was implemented with the method shown in psuedocode in Algorithm \ref{pc:rank2_add}. The function performs element-wise addition on two input rank 2 tensors $\mathbf{A}$ and $\mathbf{B}$, returning a new rank 2 tensor $\mathbf{C}$ as output. The function takes in three arguments: two 2d matrices (numpy arrays) and a single integer value \textit{N}. A square 2d matrix (same number of rows and columns) is equivalent to a rank 2 tensor with both dimensions equal in the number of elements. In the implemented function, the assumption is made that both input tensors must be square and of rank 2. This requirement is checked by passing both input matrices to the function \verb|checkRank2valid()| which uses the in-built Python \verb|assertion| method to confirm separately that both$\mathbf{A}$ and $\mathbf{B}$ are square and a third assertion checking that both input 2d Numpy arrays are the same shape. If any of the assertions fail (i.e. a required condition is not met) then the script execution is halted and an error string describing the failure is printed to the terminal output.
-If the assertions inside the error-checking method pass without error, then the method continues. The first step is initialising a new rank 2 tensor as a 2-dimensional Numpy array, with all elements set to zero. Two nested for-loops are then iterated through for the both dimensional indices (\textit{i,j}) in $\mathbf{A}$ and $\mathbf{B}$, performing element-wise addition as shown in equation \ref{eq:sum_2d}:
+The function \verb|rank2TensorAdd()| was implemented with the method shown in psuedocode in Algorithm \ref{pc:rank2_add}. The function performs element-wise addition on two input rank 2 tensors $\mathbf{A}$ and $\mathbf{B}$, returning a new rank 2 tensor $\mathbf{C}$ as output. The function takes in three arguments: two 2d matrices (numpy arrays) and a single integer value \textit{N}. A square 2d matrix (same number of rows and columns) is equivalent to a rank 2 tensor with both dimensions equal in the number of elements. The first step is initialising a new rank 2 tensor as a 2-dimensional Numpy array, with all elements set to zero. Two nested for-loops are then iterated through for the both dimensional indices (\textit{i,j}) in $\mathbf{A}$ and $\mathbf{B}$, performing element-wise addition as shown in equation \ref{eq:sum_2d}:
 
 \begin{equation}\label{eq:sum_2d}
     c_{ij} \mathrel{{+}{=}}
      a_{ij} + b_{ij}
-\end{equation}
+\end{equation}%
 
 This operation is identical to standard element-wise summing of two matrices.
 
-\begin{algorithm}[ht]
+\begin{algorithm}[ht] \small
 \caption{Rank 2 Tensor addition}\label{pc:rank2_add}
     	\SetAlgoLined
      	\KwIn{tensor A (N x N), tensor B (N x N), N}
@@ -75,10 +64,10 @@ This operation is identical to standard element-wise summing of two matrices.
 			$C_{ij}  \leftarrow A_{ij} + B_{ij}$\
 		}
 	}
-\end{algorithm}
+\end{algorithm}%
 
 \subsection{Error checking}
-The 2d addition function  assumes that the input tensors are of the same length in all dimensions, and equal in dimensions. The two inputs are passed to simple error-checking function which uses python assertions to check these requirements. A message is printed in case of failure, as the script halts.This function is called \verb|checkRank2Valid(A,B)|.
+In the implemented 2d addition function, the assumption is made that both input tensors must be square and of rank 2. This requirement is checked by passing both input matrices to the function \verb|checkRank2valid()| which uses the in-built Python \verb|assertion| method to confirm separately that both$\mathbf{A}$ and $\mathbf{B}$ are square and a third assertion checking that both input 2d Numpy arrays are the same shape. If any of the assertions fail (i.e. a required condition is not met) then the script execution is halted and an error string describing the failure is printed to the terminal output.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Rank 2 Tensor Multiplication}
@@ -88,11 +77,11 @@ Each element of matrix C is initialised to zero. The matrix product $\mathbf{AB}
 \begin{equation}\label{eq:product_2d}
     c_{ij} \mathrel{{=}}
      \sum_{i=1}^{N}\sum_{j=1}^{N} a_{ik}b_{kj}
-\end{equation}
+\end{equation}%
 
 The implementation is shown as pseudocode in Algorithm \ref{pc:rank2_mult}. The function uses nested for-loops to perform the summations across equated indices of the row and columns of the input matrices, respectively. The innermost loop's individual row-column product is summed with the last iteration of the current element of C being calculated, with the result then stored as as the new value of the current element in C. This requires initialising the C matrix, with all elements set zeros before performing the iteration loops, to avoid accidentally adding the random contents from in the allocated memory location for the array.
 
-\begin{algorithm}[ht]
+\begin{algorithm}[ht] \small
 \caption{Rank 2 Tensor Multiplication}\label{pc:rank2_mult}
     	 \SetAlgoLined
      	\KwIn{tensor A (N x N), tensor B (N x N), N}
@@ -102,19 +91,22 @@ The implementation is shown as pseudocode in Algorithm \ref{pc:rank2_mult}. The 
 		\For{j = 1 to N}{
 			\For{k = 1 to N}{
 				$C_{ij}  \leftarrow C_{ij} + A_{ij} * B_{ij}$\
-			}		
+			}%	
 		}
 	}
-\end{algorithm}
+\end{algorithm}%
 
 \subsection{Error checking}
-The 2d multiplication function also calls the \verb|checkRank2Valid(A,B)| function to confirm that the input matrices are square.
+The 2d multiplication function also calls the \verb|checkRank2Valid(A,B)| function to confirm that the input matrices are square and with with rows and columns of equal length.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Rank 3 Tensor Addition}
+Tensor addition requires that the inputs match in shape and size in order to be performed. The operation can be performed sequentially, but as each individual element-sum is independent of the adjacent elements within the input and output tensors, the operation could benefit from parallelisation. In the provided implementation the method is programmed using sequential, nested for-loops.
 
 \subsection{rank3TensorAdd()}
-\begin{algorithm}[ht]
+The function \verb|rank3TensorAdd()| performs element-wise addition using the two input rank 3 tensors. The output matrix has the same shape and dimension (and total number of elements) as both of the inputs do. The method of iterating through the summation is shown in Algorithm \ref{pc:rank3_add}.
+
+\begin{algorithm}[ht] \small
 \caption{Rank 3 Tensor Addition}\label{pc:rank3_add}
     	 \SetAlgoLined
      	\KwIn{tensor A (N x N x N), tensor B (N x N x N), N}
@@ -127,7 +119,7 @@ The 2d multiplication function also calls the \verb|checkRank2Valid(A,B)| functi
 			}
 		}
 	}
-\end{algorithm}
+\end{algorithm} %
 
 \subsection{Error checking}
 The 3d addition function also assumes that the input tensors are of the same length in all dimensions, and equal in dimensionality. It passes the two inputs to a simple error-checking function which checks these requirements with python assertion statements, which halt script execution and print a message to output in case of failure. This function is called \verb|checkRank3Valid(A,B)|.
@@ -141,21 +133,21 @@ The 3d addition function also assumes that the input tensors are of the same len
     \label{fig:tensor_product} 
 \end{figure}%
 
-Tensor multiplication has two broad categories: the outer product, which is well defined, and the inner product, which  is often an application-specific operation. The required specification for the multiplication operation for the laboratory was to multiply two 3d matrices (rank 3 tensors) with the same number of elements, and produce a new 3d matrix.
+Tensor multiplication has two broad categories: the outer product, which is well defined, and the inner product, which  is often an application-specific operation \cite{sringeri2015tensor}. The required specification for the multiplication operation for the laboratory was to multiply two 3d matrices (rank 3 tensors) with the same number of elements, and produce a new 3d matrix with an equal number of dimensions to both inputs.
 
 \subsection{Tensor Contraction}
-Tensor contraction involves equating two or more of the input tensor dimensional indices, referred to the "free variable(s)", and iterating through the remaining indices (known as the "dummy variables") in element-wise row-column product assignment. An example of single contraction between a rank 4 tensor $\mathbf{A[N][N][N][N]}$ and rank 2 tensor $\mathbf{B[N][N]}$, using Einstein summation notation (which drops the implied sigma symbol in the summation operation when there is a repeated index), results in a rank 4 tensor $\mathbf{C}[N][N][N]$, as shown in equation \ref{eq:tensor_contraction_single}:
+Tensor contraction involves equating two or more of the input tensor dimensional indices, referred to the "free variable(s)", and summing over the the remaining indices (known as the "dummy variables") in element-wise row-column product assignment \cite{hackbusch2012tensor}. An example of single contraction between a rank 4 tensor $\mathbf{A[N][N][N][N]}$ and rank 2 tensor $\mathbf{B[N][N]}$, using Einstein summation notation (which drops the implied sigma symbol in the summation operation when there is a repeated index \cite{Hunt-notes}), results in a rank 4 tensor $\mathbf{C}[N][N][N]$, as shown in equation \ref{eq:tensor_contraction_single}:
 
 \begin{equation}\label{eq:tensor_contraction_single}
     c_{ijkm} \mathrel{{=}} a_{ijkx}b_{xm}
-\end{equation}
+\end{equation}%
 
-One of the indices in the first tensors has been equated ("contracted") with an index in the second tensor. Any definition of contraction results in a reduction of dimensions, in this case with the resultant tensor having a rank of $(\textit{n}-2)$, where \textit{n} is the sum of the dimensions of both matrices.  Double contraction would involve equating two of each tensors' indices making the formula for dimensional reduction $(\textit{n - 2r})$, where $r=1$ for single contraction, $r=2$ for double contraction, etc. However, this definition of an inner tensor product does not meet the requirements of the laboratory. Applying this operation to the inner product of two 3d matrices would result in a general formulation: $\mathbf{A}[N][N][N]\mathbf{B}[N][N][N]=\mathbf{C}[N][N][N][N]$ which possesses an additional dimension. The implementation of the laboratory function for multiplying two square 3d arrays is constructed differently.
+One of the indices in the first tensor has been equated ("contracted") with an index in the second tensor. Any definition of contraction results in a reduction of dimensions, in this case with the resultant tensor having a rank of $(\textit{m + n}-2)$, where \textit{n} and \textit{m} are the dimensions of the original input matrices \cite{sochi2016introduction}.  Repeated contraction would involve equating two or more of each tensors' indices making the formula for dimensional reduction $(\textit{n + m - 2r})$, where $r=1$ for single contraction, $r=2$ for double contraction, etc. However, this definition of an inner tensor product does not meet the requirements of the laboratory. Applying this operation to the inner product of two 3d matrices would result in a general formulation: $\mathbf{A}[N][N][N] \times \mathbf{B}[N][N][N] \mathrel{=} \mathbf{C}[N][N][N][N]$ which possesses an additional dimension. The implementation of the laboratory function for multiplying two square 3d arrays is constructed differently.
 
 \subsection{rank3TensorMult()}
-The implementation of the function \verb|rank3TensorMult()| is shown in Algorithm \ref{pc:rank3_mult}. A graphical explanation of the operation is shown in Figure \ref{fig:tensor_product}. The function takes two cubic matrices as inputs, along with \textit{N}, where \textit{N} is the length of all three dimensions in both input matrices. The function first initialises $\mathbf{C}$ to zero for all elements. Then a single dimension in both input tensors is equated (contracted), and a "slice" of the 2d matrix at this index in the contracted 3rd dimension is extracted from both inputs. The resulting two 2d matrices are then multiplied (by normal matrix multiplication), performing contraction again, in the form of element-wise dot-product for each element in the product matrix. This matrix is also 2-dimension. The resulting matrix is then assigned to a "slice" of $\mathbf{C}$, at the index in the 3rd dimension corresponding to the original contraction index. This operation "stacks" the 2d matrix which is the product of the extracted input slices, resulting in a cubic tensor which has the same dimensions and total number of elements as both of the inputs.
+The implementation of the function \verb|rank3TensorMult()| is shown in Algorithm \ref{pc:rank3_mult}. A graphical explanation of the operation is shown in Figure \ref{fig:tensor_product}. The function takes two cubic matrices as inputs, along with \textit{N}, where \textit{N} is the length of all three dimensions in both input matrices. The function first initialises $\mathbf{C}$ to zero for all elements. Then a single dimension in both input tensors is equated (contracted), and a "slice" of the 2d matrix at this index in the contracted 3rd dimension is extracted from both inputs. This results in two 2d matrices, which are then multiplied by the standard 2d matrix method (performing contraction again, in the form of element-wise dot-product for each element in the product matrix). The resultant matrix is also square and 2 dimensional, and this matrix is then assigned to a "slice" of $\mathbf{C}$, at the index in the 3rd dimension corresponding to the original contraction index. This operation "stacks" the 2d matrices (the products of the extracted input slices) resulting in a cubic tensor which has the same dimensions and total number of elements as both of the inputs rank 3 tensors.
 
-\begin{algorithm}[ht]
+\begin{algorithm}[ht] \small
 \caption{Rank 3 Tensor Multiplication}\label{pc:rank3_mult}
     	 \SetAlgoLined
      	\KwIn{tensor A (N x N x N), tensor B (N x N x N), N}
@@ -164,10 +156,10 @@ The implementation of the function \verb|rank3TensorMult()| is shown in Algorith
 	\For{x = 1 to N}{
         $C_{ijx}  \leftarrow C_{ijx} + \big[A_{ik}B_{kj}\big]_{x}$\
 	}
-\end{algorithm}
+\end{algorithm}%
 
 \subsection{Error checking}
-The 3d multiplication function makes the same assumptions of the input matrix length and dimensionality, and calls the same error-checking function called before 3d addition, \verb|checkRank3Valid(A,B)|.
+The 3d multiplication function makes the same assumptions of the input matrix length and dimensionality, and calls the same error-checking function as used in the 3d addition, \verb|checkRank3Valid(A,B)|.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \addtolength{\textheight}{-11.0cm} 
 % This command serves to balance the column lengths
@@ -178,7 +170,7 @@ The 3d multiplication function makes the same assumptions of the input matrix le
 % sure that you do not shorten the textheight too much.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
-Conclusion goes here.
+Functions to perform mathematical operations with rank 2 and rank 3 tensors, of equal lengths in their respective dimensions (square or cubic) were implemented in Python, using the Numpy library for an array data structure. The steps to perform addition, and multiplication, using sequential computational processes were demonstrated in psuedocode, and the specific implementation of cubic 3d array multiplication was compared to the general definition of tensor contraction. Basic error checking was implemented for all functions.
 
 % -------------------------------------------------------------------------------------
 % 	BIBLIOGRAPHY
